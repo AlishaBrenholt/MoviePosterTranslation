@@ -1,7 +1,11 @@
 import requests
 import os
 from dotenv import load_dotenv
+import ratelimit
 
+# rate limit 20 requests per second
+@ratelimit.sleep_and_retry
+@ratelimit.limits(calls=20, period=1)
 class API():
     def __init__(self):
         load_dotenv()
@@ -27,10 +31,17 @@ class API():
                 english_posters.append(poster["file_path"])
             elif poster["iso_639_1"] == "ko":
                 korean_posters.append(poster["file_path"])
+
+        # if korean has none or english has none, raise error
+        if not english_posters:
+            raise Exception(f"No English Posters Found For {movie_id}")
+        if not korean_posters:
+            raise Exception(f"No Korean Posters Found For {movie_id}")
+
         return {"en": english_posters, "ko": korean_posters}
 
     def download_images(self,movie_id, image_paths, language):
-        for image_path in image_paths:
+         for image_path in image_paths:
             image_url = f"{self.IMAGE_URL}{image_path}"
             response = requests.get(image_url)
 
@@ -46,12 +57,38 @@ class API():
                 file.write(response.content)
                 print(f"Downloaded {image_path}")
 
+    def get_movie_high_rated_movie(self, page=1):
+        MOVIE_URL = f"https://api.themoviedb.org/3/movie/top_rated?api_key={self.api_key}&language=en-US&page={page}"
+        response = requests.get(MOVIE_URL, headers=self.headers)
+        json_response = response.json()
+        return json_response
 
-movie_id = 496243
 
+
+# movie_id = 496243
+#
 api = API()
-json_response = api.get_movie_image_paths(movie_id)
-poster_language_dict = api.parse_movie_image_paths(json_response)
-for language, image_paths in poster_language_dict.items():
-    api.download_images(movie_id, image_paths, language)
+
+top_rated_movies = api.get_movie_high_rated_movie()
+page = top_rated_movies["page"]
+results = top_rated_movies["results"]
+print(f"Page: {page}")
+for movie in results:
+    # ensure it was originally in english
+    if movie["original_language"] == "en":
+        print(f"Movie candidate found: {movie['title']}")
+        movie_id = movie["id"]
+        # if movie exists in folder, skip
+        if os.path.exists(f"images/{movie_id}"):
+            print(f"Skipping {movie['title']}")
+            continue
+        json_response = api.get_movie_image_paths(movie_id)
+        poster_language_dict = api.parse_movie_image_paths(json_response)
+        for language, image_paths in poster_language_dict.items():
+            api.download_images(movie_id, image_paths, language)
+
+# json_response = api.get_movie_image_paths(movie_id)
+# poster_language_dict = api.parse_movie_image_paths(json_response)
+# for language, image_paths in poster_language_dict.items():
+#     api.download_images(movie_id, image_paths, language)
 
