@@ -16,7 +16,7 @@ class API():
         }
         self.MOVIE_URL = "https://api.themoviedb.org/3/movie"
         self.IMAGE_URL = "https://image.tmdb.org/t/p/original"
-        self.IMAGE_FOLDER = "images"
+        self.IMAGE_FOLDER = "data/images"
     def get_movie_image_paths(self, movie_id):
         Movie_URL = f"https://api.themoviedb.org/3/movie/{movie_id}/images?include_image_language=en%2Cko"
         response = requests.get(Movie_URL, headers=self.headers)
