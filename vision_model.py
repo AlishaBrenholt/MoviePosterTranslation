@@ -65,9 +65,10 @@ def get_background_color(image, x, y, w, h):
     background_color = image[sample_y, sample_x]
     return tuple(background_color)
 
-def tesseract_extractor(input_path, tesseract_path):
+def tesseract_extractor(data_path, poster_name, tesseract_path):
     pytesseract.pytesseract.tesseract_cmd = tesseract_path
     # Load image
+    input_path = data_path + poster_name
     poster = cv2.imread(input_path)
 
     # gray conversion improves accuracy
@@ -78,7 +79,7 @@ def tesseract_extractor(input_path, tesseract_path):
     # processed = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel)
     # gray_poster = cv2.adaptiveThreshold(processed, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2)
 
-    custom_ocv_config = r'--oem 3 --psm 6'
+    custom_ocv_config = r'--oem 3 --psm 11'
     data = pytesseract.image_to_data(gray_poster, config=custom_ocv_config, output_type=pytesseract.Output.DICT)
 
 
@@ -111,8 +112,8 @@ def tesseract_extractor(input_path, tesseract_path):
             # cv2.putText(poster, text, (x, y-5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
             # Bounding box drawing section ends
 
-    cv2.imshow("poster", poster)
-    cv2.waitKey(0)
+    # cv2.imshow("poster", poster)
+    # cv2.waitKey(0)
     # bounding box version result save
     # result_path = 'results/text_recognition/' + 'pre' + poster_name[:-4]+ custom_ocv_config + " conf" + str(confidence_threshold) +'.jpg'
     # blurred version result save

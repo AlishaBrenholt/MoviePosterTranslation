@@ -1,6 +1,5 @@
 import vision_model
 import llm
-import cv2
 
 # create tesseract instance
 # conda install pytesseract
@@ -8,9 +7,8 @@ import cv2
 tesseract_path = "/Users/kiyujin/miniconda3/envs/pytorch/bin/tesseract"
 # Load image
 # TODO : Make it iterative for later
-data_path = "./data/images/207/en/"
-poster_name = "1xYoAVb0zOsLZd39SIQltn5r6JE.jpg"
-input_path = data_path + poster_name
+data_path = "./data/images/423/en/"
+poster_name = "2hFvxCCWrTmCYwfy7yum0GKRi3Y.jpg"
 # Extract texts and save text-extracted poster in results/blurred/
 '''
 Structure of data
@@ -21,7 +19,7 @@ Structure of data
 
 data['text'] has the text contents that can go into LLM
 '''
-data = vision_model.tesseract_extractor(input_path, tesseract_path) # This has text information including text contents and their location
+data = vision_model.tesseract_extractor(data_path, poster_name, tesseract_path) # This has text information including text contents and their location
 
 print(data['text'])
 
