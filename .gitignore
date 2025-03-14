@@ -1,4 +1,11 @@
+
+# Customized
+data
 data*
+.DS_Store
+*.sh
+results
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
