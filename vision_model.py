@@ -18,18 +18,6 @@ import pytesseract
 import easyocr
 import os
 
-# create tesseract instance
-# conda install pytesseract
-# You can find the path using 'which tesseract' command in terminal in macOS
-tesseract_path = "/Users/kiyujin/miniconda3/envs/pytorch/bin/tesseract"
-pytesseract.pytesseract.tesseract_cmd = tesseract_path
-# Load image
-poster = cv2.imread(data_path + poster_name)
-
-# print(results)
-# Display the poster
-# cv2.imshow("gray", gray_poster)
-# cv2.waitKey(0)
 
 # Never mind easyocr sucks
 def easyocr_extractor(poster):
@@ -77,7 +65,11 @@ def get_background_color(image, x, y, w, h):
     background_color = image[sample_y, sample_x]
     return tuple(background_color)
 
-def tesseract_extractor(poster):
+def tesseract_extractor(input_path, tesseract_path):
+    pytesseract.pytesseract.tesseract_cmd = tesseract_path
+    # Load image
+    poster = cv2.imread(input_path)
+
     # gray conversion improves accuracy
     gray_poster = cv2.cvtColor(poster, cv2.COLOR_BGR2GRAY)
 
@@ -125,14 +117,9 @@ def tesseract_extractor(poster):
     # result_path = 'results/text_recognition/' + 'pre' + poster_name[:-4]+ custom_ocv_config + " conf" + str(confidence_threshold) +'.jpg'
     # blurred version result save
     result_path = 'results/blurred/' + poster_name[:-4] + custom_ocv_config +'.jpg'
-    print(result_path)
     cv2.imwrite(result_path, poster)
-
     cv2.destroyAllWindows()
-    print(data)
     return data
-
-tesseract_extractor(poster)
 
 # Tried contour. Maybe can add this later.
 def test_tess_extractor(poster):
