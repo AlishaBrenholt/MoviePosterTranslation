@@ -33,7 +33,9 @@ for text in data['text']:
 # translated_text : translated version of data['text']
 # ex. llm_output = ['', '', '', '', '죽은', '시인들']
 # Put the output into data
-data['text'] = translated_text
+eng_data_text = data['text']
+data['text'] = [eng_data_text, translated_text]
 # Input data into AnyText now.
 print(data['text'])
+print(data)
 # TODO : Sam's part
