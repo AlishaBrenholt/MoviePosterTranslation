@@ -1,8 +1,11 @@
+
 # Customized
 data
+data*
 .DS_Store
 *.sh
 results
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -181,4 +184,4 @@ cython_debug/
 
 
 # my ignores
-images/
+data/images/

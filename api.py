@@ -79,16 +79,10 @@ for movie in results:
         print(f"Movie candidate found: {movie['title']}")
         movie_id = movie["id"]
         # if movie exists in folder, skip
-        if os.path.exists(f"images/{movie_id}"):
+        if os.path.exists(f"{api.IMAGE_FOLDER}/{movie_id}"):
             print(f"Skipping {movie['title']}")
             continue
         json_response = api.get_movie_image_paths(movie_id)
         poster_language_dict = api.parse_movie_image_paths(json_response)
         for language, image_paths in poster_language_dict.items():
             api.download_images(movie_id, image_paths, language)
-
-# json_response = api.get_movie_image_paths(movie_id)
-# poster_language_dict = api.parse_movie_image_paths(json_response)
-# for language, image_paths in poster_language_dict.items():
-#     api.download_images(movie_id, image_paths, language)
-
