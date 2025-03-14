@@ -1,4 +1,5 @@
 import vision_model
+import llm
 import cv2
 
 # create tesseract instance
@@ -25,10 +26,16 @@ data = vision_model.tesseract_extractor(input_path, tesseract_path) # This has t
 print(data['text'])
 
 # Input data['text'] to LLM part
-
-# LLM Output : translated version of data['text']
-llm_output = ['', '', '', '', '죽은', '시인들']
+translated_text = []
+for text in data['text']:
+    if text == '':
+        translated_text.append('')
+    else:
+        translated_text.append(llm.FullLLM().translate(text))
+# translated_text : translated version of data['text']
+# ex. llm_output = ['', '', '', '', '죽은', '시인들']
 # Put the output into data
-data['text'] = llm_output
+data['text'] = translated_text
 # Input data into AnyText now.
+print(data['text'])
 # TODO : Sam's part
