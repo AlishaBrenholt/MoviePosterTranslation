@@ -1,14 +1,15 @@
 import vision_model
 import llm
+import poster_generator
 
 # create tesseract instance
 # conda install pytesseract
 # You can find the path using 'which tesseract' command in terminal in macOS
-tesseract_path = "/Users/kiyujin/miniconda3/envs/pytorch/bin/tesseract"
+tesseract_path = "/usr/local/bin/tesseract"
 # Load image
 # TODO : Make it iterative for later
-data_path = "./data/images/423/en/"
-poster_name = "2hFvxCCWrTmCYwfy7yum0GKRi3Y.jpg"
+data_path = "./data/images/527641/en/"
+poster_name = "19OEGyBQtG2OFaaCBxPCvjzOw3.jpg"
 # Extract texts and save text-extracted poster in results/blurred/
 '''
 Structure of data
@@ -36,4 +37,8 @@ for text in data['text']:
 data['text'] = translated_text
 # Input data into AnyText now.
 print(data['text'])
-# TODO : Sam's part
+
+# pass filepath to edited poster and the data for it
+# stores in results/final_image after running
+final_poster = poster_generator.generate_poster("19OEGyBQtG2OFaaCBxPCvjzOw3--oem 3 --psm 11.jpg",
+                                                data)
