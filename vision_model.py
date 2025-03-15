@@ -2,8 +2,8 @@ import torch
 # Read Poster data
 
 # Test data reader
-data_path = "./data/images/207/en/"
-poster_name = "1xYoAVb0zOsLZd39SIQltn5r6JE.jpg"
+# data_path = "./data/images/207/en/"
+# poster_name = "1xYoAVb0zOsLZd39SIQltn5r6JE.jpg"
 # poster_name = "2eWjdb9WcKRUPFaUetfHNDqyyWA.jpg"
 # More Generalized data reader (iterative)
 # import os
@@ -15,40 +15,40 @@ poster_name = "1xYoAVb0zOsLZd39SIQltn5r6JE.jpg"
 
 import cv2
 import pytesseract
-import easyocr
+# import easyocr
 import os
 
 
 # Never mind easyocr sucks
-def easyocr_extractor(poster):
-    # Convert to grayscale (improves text contrast)
-    gray = cv2.cvtColor(poster, cv2.COLOR_BGR2GRAY)
-
-    # Apply thresholding (better text clarity)
-    _, thresh = cv2.threshold(gray, 150, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-
-    # Save & use the preprocessed image
-    cv2.imwrite("processed.jpg", thresh)  # Save processed image
-
-    reader = easyocr.Reader(['en'])
-    results = reader.detect(poster)
-    print(len(results))
-    print(results[1])
-    print(len(results[0][0]))
-    print(results[0][0])
-    for (box, text) in results:
-
-        (top_left, top_right, bottom_right, bottom_left) = box
-        top_left = tuple(map(int, top_left))
-        bottom_right = tuple(map(int, bottom_right))
-
-        cv2.rectangle(poster, top_left, bottom_right, (0, 255, 0), 2)
-        text_loc = max(top_left[1] - 10, 10)
-        cv2.putText(poster, text, (top_left[0], text_loc), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-
-    cv2.imshow("poster", poster)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+# def easyocr_extractor(poster):
+#     # Convert to grayscale (improves text contrast)
+#     gray = cv2.cvtColor(poster, cv2.COLOR_BGR2GRAY)
+#
+#     # Apply thresholding (better text clarity)
+#     _, thresh = cv2.threshold(gray, 150, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+#
+#     # Save & use the preprocessed image
+#     cv2.imwrite("processed.jpg", thresh)  # Save processed image
+#
+#     reader = easyocr.Reader(['en'])
+#     results = reader.detect(poster)
+#     print(len(results))
+#     print(results[1])
+#     print(len(results[0][0]))
+#     print(results[0][0])
+#     for (box, text) in results:
+#
+#         (top_left, top_right, bottom_right, bottom_left) = box
+#         top_left = tuple(map(int, top_left))
+#         bottom_right = tuple(map(int, bottom_right))
+#
+#         cv2.rectangle(poster, top_left, bottom_right, (0, 255, 0), 2)
+#         text_loc = max(top_left[1] - 10, 10)
+#         cv2.putText(poster, text, (top_left[0], text_loc), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+#
+#     cv2.imshow("poster", poster)
+#     cv2.waitKey(0)
+#     cv2.destroyAllWindows()
 # easyocr_extractor(poster)
 
 # Function to sample 3 pixels around the bounding box to get the background color
@@ -102,24 +102,25 @@ def tesseract_extractor(data_path, poster_name, tesseract_path):
             background_color = get_background_color(poster, x, y, w, h)
 
             # Fill the text region with the background color
-            poster[y:y + h, x:x + w] = background_color
+            # poster[y:y + h, x:x + w] = background_color
 
             # Bounding box drawing section starts
             # Draw bounding box for the text
-            # cv2.rectangle(poster, (x, y), (x + w, y + h), (0, 0, 255), 2)
+            cv2.rectangle(poster, (x, y), (x + w, y + h), (0, 0, 255), 2)
             #
             # # Put the text above the box
-            # cv2.putText(poster, text, (x, y-5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
+            cv2.putText(poster, text, (x, y-5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
             # Bounding box drawing section ends
 
     # cv2.imshow("poster", poster)
     # cv2.waitKey(0)
     # bounding box version result save
-    # result_path = 'results/text_recognition/' + 'pre' + poster_name[:-4]+ custom_ocv_config + " conf" + str(confidence_threshold) +'.jpg'
-    # blurred version result save
-    result_path = 'results/blurred/' + poster_name[:-4] + custom_ocv_config +'.jpg'
+    result_path = 'results/text_recognition/' + 'pre' + poster_name[:-4]+ custom_ocv_config  +'.jpg'
     cv2.imwrite(result_path, poster)
-    cv2.destroyAllWindows()
+    # blurred version result save
+    # result_path = 'results/blurred/' + poster_name[:-4] + custom_ocv_config +'.jpg'
+    # cv2.imwrite(result_path, poster)
+    # cv2.destroyAllWindows()
     return data
 
 # Tried contour. Maybe can add this later.
