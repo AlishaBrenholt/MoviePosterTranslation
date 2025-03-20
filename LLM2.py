@@ -13,10 +13,6 @@ class LLMController():
         return self.tokenizer.batch_decode(generated_tokens, skip_special_tokens=True)
 
 
-llm = LLMController()
-print(llm.translate("Once upon a time"))
-
-
 # model = "KRAFTON/KORani-v3-13B"
 # translator = pipeline(
 #     "translation",
