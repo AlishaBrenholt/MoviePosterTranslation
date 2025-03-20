@@ -1,11 +1,20 @@
 import vision_model
 import llm
 import poster_generator
+from dotenv import load_dotenv
+import os
+import LLM2
 
 # create tesseract instance
 # conda install pytesseract
 # You can find the path using 'which tesseract' command in terminal in macOS
-tesseract_path = "/usr/local/bin/tesseract"
+load_dotenv()
+try:
+    tesseract_path = os.getenv("TESSERACT_PATH")
+except:
+    tesseract_path = "/usr/local/bin/tesseract"
+
+
 # Load image
 # TODO : Make it iterative for later
 data_path = "./data/images/527641/en/"
@@ -26,11 +35,12 @@ print(data['text'])
 
 # Input data['text'] to LLM part
 translated_text = []
+llm = LLM2.LLMController()
 for text in data['text']:
     if text == '':
         translated_text.append('')
     else:
-        translated_text.append(llm.FullLLM().translate(text))
+        translated_text.append(llm.translate(text))
 # translated_text : translated version of data['text']
 # ex. llm_output = ['', '', '', '', '죽은', '시인들']
 # Put the output into data
