@@ -11,10 +11,11 @@ Download data folder from Onedrive and put it right under the most outside direc
 Make results folder that has two folders called 'blurred' and 'text_recognition' inside.
 
 
-## API
+## Setting up your env file
 First you need to install dotenv by running `pip install python-dotenv` in your terminal. Then you need to create a .env file in the root directory of the project and add the following variables
 ```
 API_KEY=your_api_key
+TESSERACT_PATH=your_tesseract_path
 ```
 
 ## Execution
