@@ -4,7 +4,7 @@ def generate_poster(img_path, data):
     img = Image.open('./results/blurred/' + img_path)
     draw = ImageDraw.Draw(img)
     for i in range(len(data['left'])):
-        text = data['text'][i]
+        text = data['text'][1][i]
         if data['width'][i] > 0 and len(text) > 0:
             fontsize = data['width'][i]//len(text)
             if fontsize > 0:
