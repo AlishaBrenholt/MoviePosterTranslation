@@ -31,8 +31,6 @@ data['text'] has the text contents that can go into LLM
 '''
 data = vision_model.tesseract_extractor(data_path, poster_name, tesseract_path) # This has text information including text contents and their location
 
-print(data['text'])
-
 # Input data['text'] to LLM part
 translated_text = []
 llm = LLM2.LLMController()
@@ -47,7 +45,6 @@ for text in data['text']:
 eng_data_text = data['text']
 data['text'] = [eng_data_text, translated_text]
 # Input data into AnyText now.
-print(data['text'])
 
 # pass filepath to edited poster and the data for it
 # stores in results/final_image after running
