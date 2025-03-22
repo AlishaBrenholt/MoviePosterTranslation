@@ -66,13 +66,13 @@ class LLMController():
         return self.tokenizer.batch_decode(generated_tokens, skip_special_tokens=True)[0]
 
     def translateALMAX(self, text):
-        prompt = f"<s>[INST] Translate this from English to Korean:\nChinese: {text}。\nKorean: [/INST]"
+        prompt = f"<s>[INST] Translate this from English to Korean:\nEnglish: {text}。\nKorean: [/INST]"
         chat_style_prompt = [{"role": "user", "content": prompt}]
         prompt = self.ALMAXTokenizer.apply_chat_template(chat_style_prompt, tokenize=False, add_generation_prompt=True)
         input_ids = self.ALMAXTokenizer(prompt, return_tensors="pt", padding=True, max_length=40, truncation=True).input_ids.to(self.device)
         self.ALMAXModel.eval()
         with torch.no_grad():
-            generated_ids = self.ALMAXModel.generate(input_ids, do_sample=True, temperature=0.9, max_length=80, pad_token_id=self.ALMAXTokenizer.pad_token_id)
+            generated_ids = self.ALMAXModel.generate(input_ids=input_ids, num_beams=5, max_new_tokens=20, do_sample=True, temperature=0.6, top_p=0.9)
         outputs = self.ALMAXTokenizer.batch_decode(generated_ids, skip_special_tokens=True)
         print(outputs)
 
