@@ -3,7 +3,7 @@ from LLM import LLMController
 import poster_generator
 from dotenv import load_dotenv
 import os
-
+import keras_extraction as ke
 
 # create tesseract instance
 # conda install pytesseract
@@ -17,8 +17,8 @@ except:
 
 # Load image
 # TODO : Make it iterative for later
-data_path = "./data/images/527641/en/"
-poster_name = "19OEGyBQtG2OFaaCBxPCvjzOw3.jpg"
+data_path = "./data/images/apocalypsenow/en/"
+poster_name = "en_1.jpg"
 # Extract texts and save text-extracted poster in results/blurred/
 '''
 Structure of data
@@ -30,6 +30,11 @@ Structure of data
 data['text'] has the text contents that can go into LLM
 '''
 data = vision_model.tesseract_extractor(data_path, poster_name, tesseract_path) # This has text information including text contents and their location
+
+'''keras extraction experiment lab'''
+ke_data = ke.keras_extractor(data_path, poster_name)
+print(f"keras_data: {ke_data}")
+'''lab done'''
 
 # Input data['text'] to LLM part
 llm = LLMController()
@@ -49,5 +54,5 @@ data['text'] = [eng_data_text, translated_text]
 
 # pass filepath to edited poster and the data for it
 # stores in results/final_image after running
-final_poster = poster_generator.generate_poster("19OEGyBQtG2OFaaCBxPCvjzOw3--oem 3 --psm 11.jpg",
+final_poster = poster_generator.generate_poster("en_1--oem 3 --psm 11.jpg",
                                                 data)

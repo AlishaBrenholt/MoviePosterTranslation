@@ -1,4 +1,3 @@
-import torch
 # Read Poster data
 
 # Test data reader
@@ -102,24 +101,24 @@ def tesseract_extractor(data_path, poster_name, tesseract_path):
             background_color = get_background_color(poster, x, y, w, h)
 
             # Fill the text region with the background color
-            # poster[y:y + h, x:x + w] = background_color
+            poster[y:y + h, x:x + w] = background_color
 
             # Bounding box drawing section starts
             # Draw bounding box for the text
-            cv2.rectangle(poster, (x, y), (x + w, y + h), (0, 0, 255), 2)
+            # cv2.rectangle(poster, (x, y), (x + w, y + h), (0, 0, 255), 2)
             #
             # # Put the text above the box
-            cv2.putText(poster, text, (x, y-5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
+            # cv2.putText(poster, text, (x, y-5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
             # Bounding box drawing section ends
 
     # cv2.imshow("poster", poster)
     # cv2.waitKey(0)
     # bounding box version result save
-    result_path = 'results/text_recognition/' + 'pre' + poster_name[:-4]+ custom_ocv_config  +'.jpg'
-    cv2.imwrite(result_path, poster)
-    # blurred version result save
-    # result_path = 'results/blurred/' + poster_name[:-4] + custom_ocv_config +'.jpg'
+    # result_path = 'results/text_recognition/' + 'pre' + poster_name[:-4]+ custom_ocv_config  +'.jpg'
     # cv2.imwrite(result_path, poster)
+    # blurred version result save
+    result_path = 'results/blurred/' + poster_name[:-4] + custom_ocv_config +'.jpg'
+    cv2.imwrite(result_path, poster)
     # cv2.destroyAllWindows()
     return data
 
