@@ -16,25 +16,25 @@ class LLMController():
         # Model 3
         self.ket_translator = pipeline("translation", model="KETI-AIR-Downstream/long-ke-t5-base-translation-aihub-en2ko", device="cpu")
 
-        # Model 4 https://github.com/fe1ixxu/ALMA
-        GROUP2LANG = {
-            1: ["da", "nl", "de", "is", "no", "sv", "af"],
-            2: ["ca", "ro", "gl", "it", "pt", "es"],
-            3: ["bg", "mk", "sr", "uk", "ru"],
-            4: ["id", "ms", "th", "vi", "mg", "fr"],
-            5: ["hu", "el", "cs", "pl", "lt", "lv"],
-            6: ["ka", "zh", "ja", "ko", "fi", "et"],
-            7: ["gu", "hi", "mr", "ne", "ur"],
-            8: ["az", "kk", "ky", "tr", "uz", "ar", "he", "fa"],
-        }
-        LANG2GROUP = {lang: str(group) for group, langs in GROUP2LANG.items() for lang in langs}
-        group_id = LANG2GROUP["ko"]
-
-        self.device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
-        print(f"Using device: {self.device}")
-        self.ALMAXModel = AutoModelForCausalLM.from_pretrained("haoranxu/X-ALMA-13B-Pretrain", torch_dtype=torch.float32, device_map=self.device)
-        # 6 has korean it looks like
-        self.ALMAXTokenizer = AutoTokenizer.from_pretrained(f"haoranxu/X-ALMA-13B-Group{group_id}", padding_side='left')
+        # Model 4 https://github.com/fe1ixxu/ALMA - Couldn't get this one to work
+        # GROUP2LANG = {
+        #     1: ["da", "nl", "de", "is", "no", "sv", "af"],
+        #     2: ["ca", "ro", "gl", "it", "pt", "es"],
+        #     3: ["bg", "mk", "sr", "uk", "ru"],
+        #     4: ["id", "ms", "th", "vi", "mg", "fr"],
+        #     5: ["hu", "el", "cs", "pl", "lt", "lv"],
+        #     6: ["ka", "zh", "ja", "ko", "fi", "et"],
+        #     7: ["gu", "hi", "mr", "ne", "ur"],
+        #     8: ["az", "kk", "ky", "tr", "uz", "ar", "he", "fa"],
+        # }
+        # LANG2GROUP = {lang: str(group) for group, langs in GROUP2LANG.items() for lang in langs}
+        # group_id = LANG2GROUP["ko"]
+        #
+        # self.device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
+        # print(f"Using device: {self.device}")
+        # self.ALMAXModel = AutoModelForCausalLM.from_pretrained("haoranxu/X-ALMA-13B-Pretrain", torch_dtype=torch.float32, device_map=self.device)
+        # # 6 has korean it looks like
+        # self.ALMAXTokenizer = AutoTokenizer.from_pretrained(f"haoranxu/X-ALMA-13B-Group{group_id}", padding_side='left')
 
 
 
@@ -65,16 +65,17 @@ class LLMController():
         generated_tokens = self.mbart_finetuned.generate(**encoded_text, forced_bos_token_id=self.tokenizer.lang_code_to_id["ko_KR"])
         return self.tokenizer.batch_decode(generated_tokens, skip_special_tokens=True)[0]
 
-    def translateALMAX(self, text):
-        prompt = f"<s>[INST] Translate this from English to Korean:\nEnglish: {text}。\nKorean: [/INST]"
-        chat_style_prompt = [{"role": "user", "content": prompt}]
-        prompt = self.ALMAXTokenizer.apply_chat_template(chat_style_prompt, tokenize=False, add_generation_prompt=True)
-        input_ids = self.ALMAXTokenizer(prompt, return_tensors="pt", padding=True, max_length=40, truncation=True).input_ids.to(self.device)
-        self.ALMAXModel.eval()
-        with torch.no_grad():
-            generated_ids = self.ALMAXModel.generate(input_ids=input_ids, num_beams=5, max_new_tokens=20, do_sample=True, temperature=0.6, top_p=0.9)
-        outputs = self.ALMAXTokenizer.batch_decode(generated_ids, skip_special_tokens=True)
-        print(outputs)
+    # I couldn't get this one to work. Its from a 2024 paper
+    # def translateALMAX(self, text):
+    #     prompt = f"Translate this from English to Korean:\nEnglish: {text}。\nKorean: "
+    #     chat_style_prompt = [{"role": "user", "content": prompt}]
+    #     prompt = self.ALMAXTokenizer.apply_chat_template(chat_style_prompt, tokenize=False, add_generation_prompt=True)
+    #     input_ids = self.ALMAXTokenizer(prompt, return_tensors="pt", padding=True, max_length=40, truncation=True).input_ids.to(self.device)
+    #     self.ALMAXModel.eval()
+    #     with torch.no_grad():
+    #         generated_ids = self.ALMAXModel.generate(input_ids=input_ids, num_beams=5, max_new_tokens=20, do_sample=True, temperature=0.6, top_p=0.9)
+    #     outputs = self.ALMAXTokenizer.batch_decode(generated_ids, skip_special_tokens=True)
+    #     print(outputs)
 
 
 
@@ -115,9 +116,8 @@ class LLMController():
             print(f'{score:.5f}'.ljust(10), end="")
 
 
-llm = LLMController()
-sentence_pairs = [("I studied at home", ["저는 집에서 공부했습니다"]),("you are very smart", ["당신은 매우 똑똑합니다","너는 매우 똑똑하다","당신은 너무 똑똑합니다"]),("I am a student", ["저는 학생입니다","저는 학생이애요"])]
-llm.translateALMAX("I studied at home")
+# llm = LLMController()
+# sentence_pairs = [("I studied at home", ["저는 집에서 공부했습니다"]),("you are very smart", ["당신은 매우 똑똑합니다","너는 매우 똑똑하다","당신은 너무 똑똑합니다"]),("I am a student", ["저는 학생입니다","저는 학생이애요"])]
 # llm.evaluate(sentence_pairs, print=True)
 
 
