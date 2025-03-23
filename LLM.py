@@ -1,7 +1,5 @@
 from transformers import MBartForConditionalGeneration, MBart50TokenizerFast, pipeline
-from transformers import AutoTokenizer, AutoModelForCausalLM
 from nltk.translate.bleu_score import sentence_bleu
-import torch
 
 class LLMController():
     def __init__(self):
