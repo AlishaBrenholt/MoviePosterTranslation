@@ -1,11 +1,10 @@
 from transformers import MBartForConditionalGeneration, MBart50TokenizerFast, pipeline
-from transformers import AutoTokenizer, AutoModelForCausalLM
 from nltk.translate.bleu_score import sentence_bleu
-import torch
 
 class LLMController():
     def __init__(self):
         # Model 1
+        print("Loading models")
         self.model = MBartForConditionalGeneration.from_pretrained("SnypzZz/Llama2-13b-Language-translate")
         self.tokenizer = MBart50TokenizerFast.from_pretrained("SnypzZz/Llama2-13b-Language-translate", src_lang="en_XX")
 
@@ -41,6 +40,7 @@ class LLMController():
         # Model 5
         self.mbart_finetuned = MBartForConditionalGeneration.from_pretrained("yesj1234/mbart-mmt_mid1_en-ko")
         self.tokenizer = MBart50TokenizerFast.from_pretrained("facebook/mbart-large-50-many-to-many-mmt")
+        print("Models loaded")
 
     def translate_good(self, text):
         model_inputs = self.tokenizer(text, return_tensors="pt")
@@ -115,10 +115,10 @@ class LLMController():
         for i,score in score_dict.items():
             print(f'{score:.5f}'.ljust(10), end="")
 
-
-# llm = LLMController()
-# sentence_pairs = [("I studied at home", ["저는 집에서 공부했습니다"]),("you are very smart", ["당신은 매우 똑똑합니다","너는 매우 똑똑하다","당신은 너무 똑똑합니다"]),("I am a student", ["저는 학생입니다","저는 학생이애요"])]
-# llm.evaluate(sentence_pairs, print=True)
+if __name__ == "__main__":
+    llm = LLMController()
+    sentence_pairs = [("I studied at home", ["저는 집에서 공부했습니다"]),("you are very smart", ["당신은 매우 똑똑합니다","너는 매우 똑똑하다","당신은 너무 똑똑합니다"]),("I am a student", ["저는 학생입니다","저는 학생이애요"])]
+    llm.evaluate(sentence_pairs, print=True)
 
 
 
