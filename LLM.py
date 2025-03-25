@@ -105,7 +105,7 @@ class LLMController():
         # Print results as a table
         if print:
             self.pretty_print(score_dict)
-        return good_bleu, facebook_bleu
+        return score_dict
 
     def pretty_print(self, score_dict):
 
