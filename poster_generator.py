@@ -1,18 +1,19 @@
-import cv2
 from PIL import Image, ImageDraw, ImageFont
-def generate_poster(img_path, data):
-    img = Image.open('./results/blurred/' + img_path)
+
+def generate_poster(img_path, ko_text, text_data):
+    img = Image.open(img_path)
     draw = ImageDraw.Draw(img)
-    for i in range(len(data['left'])):
-        text = data['text'][1][i]
-        if data['width'][i] > 0 and len(text) > 0:
-            fontsize = data['width'][i]//len(text)
-            if fontsize > 0:
-                font = ImageFont.truetype('./fonts/malgun-gothic.ttf', fontsize)
-            else:
-                font = ImageFont.truetype('./fonts/malgun-gothic.ttf', 10)
-            position = (data['left'][i], data['top'][i])
-            text_color = (0, 0, 0)
-            draw.text(position, text, text_color, font=font,
-                      align='center')
-    img.save('./results/final_image/' + img_path)
+    for item in text_data:
+        en_text = item[0][0]
+        positions = item[0][1]
+        left = (positions[0][0], positions[0][1])
+        right = (positions[1][0], positions[1][1])
+        fontsize = (right[0]-left[0])//len(ko_text[0])
+        font = ImageFont.truetype('./fonts/malgun-gothic.ttf', fontsize)
+        left = (positions[0][0], positions[0][1])
+        text_color = (0, 0, 0)
+        draw.text(left, ko_text[0], text_color, font=font,
+                  align='center')
+
+    save_path = './results/final_image/' + img_path[16:-9] + img_path[-5:]
+    img.save(save_path)
