@@ -21,12 +21,12 @@ try:
 except:
     tesseract_path = "/usr/local/bin/tesseract"
 
-# TODO : Make it iterative for later
-data_path = "./data/images/apocalypsenow/en/"
-poster_name = "en_1.jpg"
+# TODO : delete this codeblock I think? Runs iteratively without it
+# data_path = "./data/images/0GOODDATA/parasite/en/"
+# poster_name = "en_1.jpg"
 '''keras extraction experiment lab'''
-data = ke.keras_extractor(data_path, poster_name)
-print(f"keras_data: {data}")
+# data = ke.keras_extractor(data_path, poster_name)
+# print(f"keras_data: {data}")
 
 
 '''lab done'''
@@ -59,6 +59,7 @@ def get_text_from_poster(tesseract_path):
             if poster.endswith(".jpg"):
                 # data_dict[movie_folder][poster] = vision_model.tesseract_extractor(eng_movie_folder_path, poster, tesseract_path)
                 data_dict[movie_folder][poster] = ke.keras_extractor(eng_movie_folder_path, poster)
+        return data_dict # TODO: Delete this line, it's just for testing and making it quicker
     return data_dict
 
 def get_translations(data):
@@ -93,14 +94,12 @@ translated_text = get_translations(data)
 BLURRED_PATH = "results/blurred/"
 for movie, images in translated_text.items():
     for image, text in images.items():
-        image_path = BLURRED_PATH + movie + "/" + image
+        image_path = BLURRED_PATH + movie + "_" + image
         # For sam's code? TODO still
         # english_text = data[movie][image]['text']
         # data[movie][image]['text'] = [english_text, text]
 
-
-
-# pass filepath to edited poster and the data for it
-# stores in results/final_image after running
-# final_poster = poster_generator.generate_poster("19OEGyBQtG2OFaaCBxPCvjzOw3--oem 3 --psm 11.jpg",
-#                                                 data)
+        # created translated poster
+        # stores in results/final_image after running
+        text_data = data[movie][image]
+        poster_generator.generate_poster(image_path, text, text_data)

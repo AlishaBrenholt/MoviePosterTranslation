@@ -46,8 +46,7 @@ def keras_extractor(data_path, poster_name, blur_strength=(190,190)):
 
                 image[y_min:y_max, char_x_min:char_x_max] = background_color
 
-
-    result_path = './results/blurred/'+ data_path[14:-4]+poster_name
+    result_path = './results/blurred/' + data_path[21:-4] + "_" + poster_name
 
     cv2.imwrite(result_path, image)
     return prediction_groups
