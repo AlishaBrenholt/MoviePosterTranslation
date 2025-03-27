@@ -5,6 +5,8 @@ from dotenv import load_dotenv
 import os
 import keras_extraction as ke
 from evaluate import EvaluateText
+import final_evaluation
+import csv
 
 def get_tesseract_path():
     try:
@@ -101,11 +103,26 @@ BLURRED_PATH = "results/blurred/"
 for movie, images in translated_text.items():
     for image, text in images.items():
         image_path = BLURRED_PATH + movie + "_" + image
-        # For sam's code? TODO still
-        # english_text = data[movie][image]['text']
-        # data[movie][image]['text'] = [english_text, text]
-
         # created translated poster
         # stores in results/final_image after running
         text_data = data[movie][image]
         poster_generator.generate_poster(image_path, text, text_data)
+
+# evaluate final poster output
+# gathers image similarity for generated poster and ground truth poster
+# puts into results/similarity_results.csv
+final_images_path = 'results/final_image/'
+with (open('results/similarity_results.csv', mode='w', newline='') as csv_file):
+    writer = csv.writer(csv_file)
+  #  writer.writerow(["Final Poster Name", "Ground Truth Poster", "VGG16 Similarity, ResNet50 Similarity"])
+    writer.writerow(["Final Poster Name", "Ground Truth Poster", "VGG16 Similarity"])
+    for poster in os.listdir(final_images_path):
+        try:
+            movie = poster[:-5]
+            cur_poster_num = poster[-5]
+            ground_truth_poster = movie_path + movie + '/' + 'ko/ko_' + cur_poster_num + '/ko_' + cur_poster_num + '.jpg'
+            similarities = final_evaluation.check_similarity(final_images_path+poster, ground_truth_poster)
+            writer.writerow([poster, ground_truth_poster] + similarities)
+        except:
+            print('Filename error: ', ground_truth_poster)
+            continue
