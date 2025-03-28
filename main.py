@@ -93,7 +93,7 @@ llm = LLMController()
 movie_path = "data/images/0GOODDATA/"
 data = get_text_from_poster(tesseract_path)
 translated_text = get_translations(data, llm)
-print(f"Translated Text: {translated_text}")
+# print(f"Translated Text: {translated_text}")
 # evaluator = EvaluateText(llm)
 # results = evaluator.evaluate(translated_text)
 # print(f"Results: {results}")
