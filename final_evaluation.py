@@ -43,12 +43,12 @@ def resnet_similarity(image_path1, image_path2):
     similarity = cosine_similarity([img1_features], [img2_features])
     return similarity
 
+def ssim(image_path1, image_path2):
+    pass
+
 def preprocess_image(image_path):
     img = image.load_img(image_path, target_size=(224, 224))
     img_data = image.img_to_array(img)
     img_data = np.expand_dims(img_data, axis=0)
     img_data = preprocess_input(img_data)
     return img_data
-
-check_similarity('./data/images/0GOODDATA/parasite/ko/ko_1/ko_1.jpg',
-                 './results/final_image/parasite1.jpg')
