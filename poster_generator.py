@@ -8,7 +8,8 @@ def generate_poster(img_path, ko_text, text_data):
         positions = item[0][1]
         left = (positions[0][0], positions[0][1])
         right = (positions[1][0], positions[1][1])
-        fontsize = (right[0]-left[0])//len(ko_text[0])
+    #   fontsize = (right[0]-left[0])//len(ko_text[0])
+        fontsize = 30
         font = ImageFont.truetype('./fonts/malgun-gothic.ttf', fontsize)
         left = (positions[0][0], positions[0][1])
         text_color = (0, 0, 0)
