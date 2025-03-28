@@ -25,7 +25,7 @@ def remove_text_opencv(data_path, poster_name):
 
     result_path = './results/blurred/' + data_path[22:-4] + '_' + poster_name
     cv2.imwrite(result_path, blurred_image)
-    return result_path
+    return prediction_groups
 
 def keras_extractor(data_path, poster_name, blur_strength=(190,190)):
     # To check if the image is shown correctly

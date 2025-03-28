@@ -5,11 +5,14 @@ from tensorflow.keras.preprocessing import image
 from tensorflow.keras.models import Model
 from sklearn.metrics.pairwise import cosine_similarity
 from scipy.spatial.distance import cosine
+from skimage.metrics import structural_similarity as ssim
+import cv2
 
 def check_similarity(image_path, ground_truth_image_path):
     vgg_sim = round(vgg_similarity(image_path, ground_truth_image_path), 3)
     resnet_sim = round(resnet_similarity(image_path, ground_truth_image_path)[0][0], 3)
-    return [vgg_sim, resnet_sim]
+    struct_sim = round(calculate_ssim(image_path, ground_truth_image_path), 3)
+    return [vgg_sim, resnet_sim, struct_sim]
 
 # cosine similarity from the VGG16 model
 def vgg_similarity(image_path1, image_path2):
@@ -43,8 +46,13 @@ def resnet_similarity(image_path1, image_path2):
     similarity = cosine_similarity([img1_features], [img2_features])
     return similarity
 
-def ssim(image_path1, image_path2):
-    pass
+def calculate_ssim(image_path1, image_path2):
+    img1 = cv2.imread(image_path1)
+    img2 = cv2.imread(image_path2)
+    dim = (2000, 2000)
+    img1 = cv2.resize(img1, dim, interpolation=cv2.INTER_AREA)
+    img2 = cv2.resize(img2, dim, interpolation = cv2.INTER_AREA)
+    return ssim(img1, img2, channel_axis=2)
 
 def preprocess_image(image_path):
     img = image.load_img(image_path, target_size=(224, 224))
