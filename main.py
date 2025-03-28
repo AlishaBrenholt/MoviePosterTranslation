@@ -120,6 +120,7 @@ with (open('results/similarity_results.csv', mode='w', newline='') as csv_file):
             total_vgg_score += similarities[0]
             total_resnet_score += similarities[1]
             total_ssim_score += similarities[2]
+            num_posters += 1
         except:
             print('Filename error: ', ground_truth_poster)
             continue
