@@ -75,14 +75,13 @@ def get_translations(data, llm):
         counter +=1
         translation_dict[movie] = {}
         for image, results in images.items():
-            translated_text = []
-            sentence = ""
+            word_coords = []
             for pair in results[0]:
-                kor_word = pair[0]
-                sentence += kor_word + " "
-            sentence = sentence.strip()
-            translated_text.append(llm.translate_good(sentence))
-            translation_dict[movie][image] = translated_text
+                word = pair[0]
+                cords = pair[1]
+                kor_word = llm.translate_good(word)
+                word_coords.append((kor_word, cords))
+            translation_dict[movie][image] = word_coords
     return translation_dict
 
 # create tesseract instance
@@ -94,9 +93,10 @@ llm = LLMController()
 movie_path = "data/images/0GOODDATA/"
 data = get_text_from_poster(tesseract_path)
 translated_text = get_translations(data, llm)
-evaluator = EvaluateText(llm)
-results = evaluator.evaluate(translated_text)
-print(f"Results: {results}")
+print(f"Translated Text: {translated_text}")
+# evaluator = EvaluateText(llm)
+# results = evaluator.evaluate(translated_text)
+# print(f"Results: {results}")
 
 # build the english, translated_text pair
 BLURRED_PATH = "results/blurred/"
