@@ -64,7 +64,7 @@ def get_text_from_poster(tesseract_path):
             # ensure it ends with .jpg, ko has some .txt files
             if poster.endswith(".jpg"):
                 # data_dict[movie_folder][poster] = vision_model.tesseract_extractor(eng_movie_folder_path, poster, tesseract_path)
-                data_dict[movie_folder][poster] = ke.keras_extractor(eng_movie_folder_path, poster)
+                data_dict[movie_folder][poster] = ke.remove_text_opencv(eng_movie_folder_path, poster)
     return data_dict
 
 def get_translations(data, llm):
@@ -114,8 +114,7 @@ for movie, images in translated_text.items():
 final_images_path = 'results/final_image/'
 with (open('results/similarity_results.csv', mode='w', newline='') as csv_file):
     writer = csv.writer(csv_file)
-  #  writer.writerow(["Final Poster Name", "Ground Truth Poster", "VGG16 Similarity, ResNet50 Similarity"])
-    writer.writerow(["Final Poster Name", "Ground Truth Poster", "VGG16 Similarity"])
+    writer.writerow(["Final Poster Name", "Ground Truth Poster", "VGG16 Similarity", "ResNet50 Similarity"])
     for poster in os.listdir(final_images_path):
         try:
             movie = poster[:-5]
