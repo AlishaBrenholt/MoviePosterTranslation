@@ -64,7 +64,9 @@ def get_text_from_poster(tesseract_path):
             # ensure it ends with .jpg, ko has some .txt files
             if poster.endswith(".jpg"):
                 # data_dict[movie_folder][poster] = vision_model.tesseract_extractor(eng_movie_folder_path, poster, tesseract_path)
-                data_dict[movie_folder][poster] = ke.remove_text_opencv(eng_movie_folder_path, poster)
+                data_dict[movie_folder][poster] = ke.keras_extractor(eng_movie_folder_path, poster)
+                blurred_image = ke.remove_text_opencv(eng_movie_folder_path, poster)
+        return data_dict
     return data_dict
 
 def get_translations(data, llm):
@@ -83,6 +85,7 @@ def get_translations(data, llm):
             sentence = sentence.strip()
             translated_text.append(llm.translate_good(sentence))
             translation_dict[movie][image] = translated_text
+        return translation_dict
     return translation_dict
 
 # create tesseract instance

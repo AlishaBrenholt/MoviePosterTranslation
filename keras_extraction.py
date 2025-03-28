@@ -23,7 +23,7 @@ def remove_text_opencv(data_path, poster_name):
     # Apply inpainting to remove text
     blurred_image = cv2.inpaint(image, mask, inpaintRadius=5, flags=cv2.INPAINT_TELEA)
 
-    result_path = './results/blurred/' + data_path[24:-4] + poster_name
+    result_path = './results/blurred/' + data_path[22:-4] + '_' + poster_name
     cv2.imwrite(result_path, blurred_image)
     return result_path
 
@@ -84,8 +84,6 @@ def keras_extractor(data_path, poster_name, blur_strength=(190,190)):
                 # Replace the original character with the blended result
                 image[y_min-noise:y_max+noise, char_x_min-noise:char_x_max+noise] = blended_char
 
-
-    result_path = './results/blurred/' + data_path[24:-4] + "_" + poster_name
-
+    result_path = './results/blurred/' + data_path[22:-4] + '_' + poster_name
     cv2.imwrite(result_path, image)
     return prediction_groups
