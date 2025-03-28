@@ -1,6 +1,7 @@
 from transformers import MBartForConditionalGeneration, MBart50TokenizerFast, pipeline, AutoModelForCausalLM, \
     AutoTokenizer
-from nltk.translate.bleu_score import sentence_bleu
+from nltk.translate.bleu_score import sentence_bleu, SmoothingFunction
+import time
 
 class LLMController():
     def __init__(self):
@@ -64,6 +65,13 @@ class LLMController():
             {"role":"assistant","content": "로버트 다우니 주니어 크리스 에반스 마크 러팔로, 어벤져스 엔드게임."},
             {"role": "user", "content": text}
         ]
+        # messages = [
+        #     {"role": "user",
+        #      "content": "You are a translator who translates English to Korean. The given english might not be correct, so try to understand the real english before translating. It will be related to movies in some way. Only repond with the korean hangul translation, say nothing else."},
+        #     {"role": "assistant",
+        #      "content": "Understood. I will translate the given English text to Korean, considering the context of movies. Please provide the text you want me to translate."},
+        #     {"role": "user", "content": text}
+        # ]
         encs = self.tokenizer_instruct.apply_chat_template(messages, return_tensors="pt")
 
         ids = self.model_instruct.generate(encs, max_new_tokens=100, do_sample=True, top_k=20)
@@ -95,8 +103,8 @@ class LLMController():
         # last_inst = decoded[0].rfind("[/INST]")
         # result = decoded[0][last_inst:]
         # result = result.replace("[/INST]", "")
-        #
-        # # To remove the pronunciation the model seems to include
+
+        # To remove the pronunciation the model seems to include
         # left_paren = result.find("(")
         # if left_paren != -1:
         #     result = result[:left_paren]
@@ -117,24 +125,35 @@ class LLMController():
             english = pair[0]
             translated.append(translate_function(english))
         bleu_scores = []
+        smoother = SmoothingFunction()
         for i in range(len(translated)):
-            bleu_scores.append(sentence_bleu(sentence_pairs[i][1], translated[i]))
+            bleu_scores.append(sentence_bleu(sentence_pairs[i][1], translated[i], weights= (1, 0, 0, 0), smoothing_function=smoother.method1))
 
         average_bleu = sum(bleu_scores) / len(bleu_scores)
         return average_bleu
 
 
     def evaluate(self, sentence_pairs, print_bool=False):
-        print(f"Starting good evaluation\n")
+        start = time.time()
         good_bleu = self.evaluate_function(sentence_pairs, self.translate_good)
-        print(f"Starting facebook mbart evaluation\n")
+        end = time.time()
+        print(f"Good BLEU: {good_bleu:.5f} - Time taken: {end-start:.2f} seconds")
+
         facebook_bleu = self.evaluate_function(sentence_pairs, self.translate_facebook_mbart)
-        print(f"Starting KETI evaluation\n")
+        print(f"Facebook BLEU: {facebook_bleu:.5f} - Time taken: {time.time()-end:.2f} seconds")
+
+        end= time.time()
         keti_bleu = self.evaluate_function(sentence_pairs, self.translate_keti_air_T5)
-        print(f"Starting mbart evaluation\n")
+        print(f"Keti BLEU: {keti_bleu:.5f} - Time taken: {time.time()-end:.2f} seconds")
+
+        end = time.time()
         mbart_bleu = self.evaluate_function(sentence_pairs, self.translate_mbart_finetuned)
-        print(f"Starting Instruct evaluation\n")
+        print(f"MBART BLEU: {mbart_bleu:.5f} - Time taken: {time.time()-end:.2f} seconds")
+
+        end = time.time()
         instruct_bleu = self.evaluate_function(sentence_pairs, self.translate_instruct)
+        print(f"Instruct BLEU: {instruct_bleu:.5f} - Time taken: {time.time()-end:.2f} seconds")
+
         score_dict = {"good": good_bleu, "facebook": facebook_bleu, "keti": keti_bleu, "mbart": mbart_bleu, "instruct": instruct_bleu}
         # Print results as a table
         if print_bool:

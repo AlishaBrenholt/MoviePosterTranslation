@@ -1,29 +1,26 @@
 from pathlib import Path
-from nltk.translate.bleu_score import sentence_bleu
+from nltk.translate.bleu_score import sentence_bleu, SmoothingFunction
 
 
 class EvaluateText():
     def __init__(self, llm, data_path="data/images/0GOODDATA/"):
         self.llm = llm
         self.data_path = data_path
-        self.bleu_score = None
-        self.rouge_score = None
-        self.meteor_score = None
+        self.smoother = SmoothingFunction()
 
     def evaluate(self, data):
-        """
-        Evaluate the translations using BLEU, ROUGE, and METEOR scores.
-        :param data: Dictionary containing the original and translated texts.
-        :return: Dictionary with evaluation scores.
-        """
         # Process the data into intended format
         results = {}
         for movie, images in data.items():
             move_blues = []
             for image, translated_text in images.items():
-                words = translated_text[0]
+                words = ""
+                for word_pair in translated_text:
+                    # left is word, right is location
+                    word = word_pair[0]
+                    words += word + " "
                 ground_truth = self.get_korean_file(movie, image)
-                blue_score = sentence_bleu(ground_truth, words)
+                blue_score = sentence_bleu(ground_truth, words, weights=(1, 0, 0, 0), smoothing_function=self.smoother.method1)
                 move_blues.append(blue_score)
             # add check for none:
             if len(move_blues) == 0:
@@ -35,12 +32,6 @@ class EvaluateText():
 
 
     def get_korean_file(self, movie, image_name):
-        """
-        Read the file and return the string with the commas removed from the text.
-        :param movie:
-        :param image_name:
-        :return:
-        """
         # remove the extension from the image name
         image_name = image_name.split(".")[0]
         image_name = image_name.replace("en", "ko")
