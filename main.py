@@ -26,16 +26,6 @@ try:
 except:
     tesseract_path = "/usr/local/bin/tesseract"
 
-# TODO : delete this codeblock I think? Runs iteratively without it
-# data_path = "./data/images/0GOODDATA/parasite/en/"
-# poster_name = "en_1.jpg"
-'''keras extraction experiment lab'''
-# data = ke.keras_extractor(data_path, poster_name)
-# print(f"keras_data: {data}")
-
-
-'''lab done'''
-
 def get_text_from_poster(tesseract_path):
     """
     Extracts text from posters using tesseract. It also saves the images in the results/blurred directory.
@@ -115,6 +105,10 @@ for movie, images in translated_text.items():
 # evaluate final poster output
 # gathers image similarity for generated poster and ground truth poster
 # puts into results/similarity_results.csv
+num_posters = 0
+total_vgg_score = 0
+total_resnet_score = 0
+total_ssim_score = 0
 final_images_path = 'results/final_image/'
 with (open('results/similarity_results.csv', mode='w', newline='') as csv_file):
     writer = csv.writer(csv_file)
@@ -127,6 +121,14 @@ with (open('results/similarity_results.csv', mode='w', newline='') as csv_file):
             ground_truth_poster = movie_path + movie + '/' + 'ko/ko_' + cur_poster_num + '/ko_' + cur_poster_num + '.jpg'
             similarities = final_evaluation.check_similarity(final_images_path+poster, ground_truth_poster)
             writer.writerow([poster, ground_truth_poster] + similarities)
+            total_vgg_score += similarities[0]
+            total_resnet_score += similarities[1]
+            total_ssim_score += similarities[2]
+            num_posters += 1
         except:
             print('Filename error: ', ground_truth_poster)
             continue
+
+    writer.writerow(['Average Across All Posters', 'Number of Posters: ' + str(num_posters),
+                      round(total_vgg_score/num_posters, 3), round(total_resnet_score/num_posters, 3),
+                      round(total_ssim_score/num_posters, 3)])

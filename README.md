@@ -8,7 +8,7 @@ conda install -c conda-forge teseract
 ## Structure
 Download data folder from Onedrive and put it right under the most outside directory.
 
-Make results folder that has two folders called 'blurred' and 'text_recognition' inside.
+Make results folder that has two subfolders inside called 'blurred' and 'final_image' inside.
 
 
 ## Setting up your env file
