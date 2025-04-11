@@ -52,16 +52,17 @@ def get_font_size(korean_text, positions, draw, middle_pixel):
     fontsize = math.ceil(abs(left[0]-right[0])) # initialize
 
     # make textbox smaller until it fits within bounding box
-    while fontsize > 1:
+    while fontsize > 15:
         font = ImageFont.truetype('./fonts/malgun-gothic.ttf', fontsize)
         # left, top, right, bottom
         bbox = draw.textbbox(middle_pixel, korean_text, font=font, anchor='mm')
-        box = (math.floor(bbox[0]), math.floor(bbox[1]),
-               math.floor(bbox[2]), math.floor(bbox[3]))
 
         # if text bbox within outer bounding box
-        if bbox[0] >= left[0] and bbox[2] <= right[0]:
-            break # textbox within bounds
+        if (bbox[0] >= left[0] and
+            bbox[2] <= right[0] and
+            bbox[1] >= top[1] and
+            bbox[3] <= bottom[1]):
+                break # textbox within bounds
         else:
             fontsize -= 1
     return fontsize
