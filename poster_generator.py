@@ -49,7 +49,7 @@ def get_font_size(korean_text, positions, draw, middle_pixel):
     top = positions[1]
     right = positions[2]
     bottom = positions[3]
-    fontsize = abs(left[0]-right[0])  # initialize
+    fontsize = math.ceil(abs(left[0]-right[0])) # initialize
 
     # make textbox smaller until it fits within bounding box
     while fontsize > 1:
