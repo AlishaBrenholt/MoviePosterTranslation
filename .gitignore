@@ -2,7 +2,6 @@
 # Customized
 .DS_Store
 *.sh
-results
 .env
 
 # Byte-compiled / optimized / DLL files

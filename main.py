@@ -1,6 +1,7 @@
 import json
 
-import vision_model
+# import vision_model
+from gpt import GPTTranslator
 from LLM import LLMController
 import poster_generator
 from dotenv import load_dotenv
@@ -44,6 +45,7 @@ def get_text_from_poster(tesseract_path):
     :return:
     """
     data_dict = {}
+    # counter = 0  # TODO: Delete this
     for movie_folder in os.listdir(movie_path):
         # .DS_Store is a macOS system file, ignore it
         if movie_folder == ".DS_Store":
@@ -52,27 +54,27 @@ def get_text_from_poster(tesseract_path):
         movie_folder_path = movie_path + movie_folder + "/"
         eng_movie_folder_path = movie_folder_path + "en/"
         kor_movie_folder_path = movie_folder_path + "ko/"
+
         for poster in os.listdir(eng_movie_folder_path):
             # ensure it ends with .jpg, ko has some .txt files
             if poster.endswith(".jpg"):
                 # data_dict[movie_folder][poster] = vision_model.tesseract_extractor(eng_movie_folder_path, poster, tesseract_path)
                 data_dict[movie_folder][poster] = ke.remove_text_opencv(eng_movie_folder_path, poster)
+        # if counter == 5: #TODO: Delete this
+        #     return data_dict #TODO: Delete this
+        # counter += 1 #TODO: Delete this
     return data_dict
 
-def get_translations(data, llm):
+def get_translations(data, gpt):
     translation_dict = {}
     counter = 0
     for movie, images in data.items():
         print(f"Translating Movies: {counter}/{len(data)} - {movie}")
         counter +=1
         translation_dict[movie] = {}
+
         for image, results in images.items():
-            word_coords = []
-            for pair in results[0]:
-                word = pair[0]
-                cords = pair[1]
-                kor_word = llm.translate_good(word)
-                word_coords.append((kor_word, cords))
+            word_coords = gpt.translate_group(results)
             translation_dict[movie][image] = word_coords
     return translation_dict
 
@@ -81,12 +83,13 @@ def get_translations(data, llm):
 # You can find the path using 'which tesseract' command in terminal in macOS
 load_dotenv()
 tesseract_path = get_tesseract_path()
-llm = LLMController()
+# llm = LLMController()
+gpt = GPTTranslator()
 movie_path = "data/images/0GOODDATA/"
 data = get_text_from_poster(tesseract_path)
-translated_text = get_translations(data, llm)
+translated_text = get_translations(data, gpt)
 print(f"Translated Text: {translated_text}")
-evaluator = EvaluateText(llm)
+evaluator = EvaluateText(gpt)
 results = evaluator.evaluate(translated_text)
 # json dump results
 with open('results/translation_results.json', 'w') as json_file:

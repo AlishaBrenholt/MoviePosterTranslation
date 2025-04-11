@@ -1,0 +1,88 @@
+Final Poster Name,Ground Truth Poster,VGG16 Similarity,ResNet50 Similarity,SSIM
+thedarkknight4.jpg,data/images/0GOODDATA/thedarkknight/ko/ko_4/ko_4.jpg,0.392,0.836,0.25
+mickey171.jpg,data/images/0GOODDATA/mickey17/ko/ko_1/ko_1.jpg,0.814,0.937,0.864
+Fantastic Beasts and Where to Find Them1.jpg,data/images/0GOODDATA/Fantastic Beasts and Where to Find Them/ko/ko_1/ko_1.jpg,0.751,0.904,0.419
+klaus1.jpg,data/images/0GOODDATA/klaus/ko/ko_1/ko_1.jpg,0.765,0.882,0.74
+mickey172.jpg,data/images/0GOODDATA/mickey17/ko/ko_2/ko_2.jpg,0.621,0.824,0.162
+mickey173.jpg,data/images/0GOODDATA/mickey17/ko/ko_3/ko_3.jpg,0.715,0.916,0.183
+guardians31.jpg,data/images/0GOODDATA/guardians3/ko/ko_1/ko_1.jpg,0.687,0.859,0.356
+happenedonenight1.jpg,data/images/0GOODDATA/happenedonenight/ko/ko_1/ko_1.jpg,0.753,0.872,0.352
+onceuponastudio2.jpg,data/images/0GOODDATA/onceuponastudio/ko/ko_2/ko_2.jpg,0.897,0.973,0.871
+thedarkknight2.jpg,data/images/0GOODDATA/thedarkknight/ko/ko_2/ko_2.jpg,0.64,0.907,0.174
+mickey177.jpg,data/images/0GOODDATA/mickey17/ko/ko_7/ko_7.jpg,0.882,0.934,0.813
+mickey176.jpg,data/images/0GOODDATA/mickey17/ko/ko_6/ko_6.jpg,0.791,0.912,0.793
+The Lego Movie1.jpg,data/images/0GOODDATA/The Lego Movie/ko/ko_1/ko_1.jpg,0.709,0.882,0.362
+cruella2.jpg,data/images/0GOODDATA/cruella/ko/ko_2/ko_2.jpg,0.427,0.812,0.367
+mulan1.jpg,data/images/0GOODDATA/mulan/ko/ko_1/ko_1.jpg,0.895,0.914,0.359
+onceuponastudio1.jpg,data/images/0GOODDATA/onceuponastudio/ko/ko_1/ko_1.jpg,0.856,0.957,0.544
+mickey174.jpg,data/images/0GOODDATA/mickey17/ko/ko_4/ko_4.jpg,0.828,0.937,0.782
+mickey175.jpg,data/images/0GOODDATA/mickey17/ko/ko_5/ko_5.jpg,0.795,0.876,0.78
+godfather1.jpg,data/images/0GOODDATA/godfather/ko/ko_1/ko_1.jpg,0.613,0.898,0.486
+cruella1.jpg,data/images/0GOODDATA/cruella/ko/ko_1/ko_1.jpg,0.672,0.912,0.386
+mulan2.jpg,data/images/0GOODDATA/mulan/ko/ko_2/ko_2.jpg,0.911,0.973,0.572
+jojorabbit1.jpg,data/images/0GOODDATA/jojorabbit/ko/ko_1/ko_1.jpg,0.828,0.906,0.459
+Killers of the Flower Moon1.jpg,data/images/0GOODDATA/Killers of the Flower Moon/ko/ko_1/ko_1.jpg,0.673,0.842,0.319
+The Shape of Water1.jpg,data/images/0GOODDATA/The Shape of Water/ko/ko_1/ko_1.jpg,0.773,0.87,0.337
+justmercy1.jpg,data/images/0GOODDATA/justmercy/ko/ko_1/ko_1.jpg,0.774,0.948,0.612
+oppenheimer2.jpg,data/images/0GOODDATA/oppenheimer/ko/ko_2/ko_2.jpg,0.947,0.977,0.944
+avengers1.jpg,data/images/0GOODDATA/avengers/ko/ko_1/ko_1.jpg,0.637,0.884,0.207
+lordoftherings1.jpg,data/images/0GOODDATA/lordoftherings/ko/ko_1/ko_1.jpg,0.642,0.894,0.145
+Killers of the Flower Moon2.jpg,data/images/0GOODDATA/Killers of the Flower Moon/ko/ko_2/ko_2.jpg,0.786,0.938,0.437
+Christopher Robin1.jpg,data/images/0GOODDATA/Christopher Robin/ko/ko_1/ko_1.jpg,0.742,0.824,0.509
+logan1.jpg,data/images/0GOODDATA/logan/ko/ko_1/ko_1.jpg,0.765,0.923,0.276
+oppenheimer1.jpg,data/images/0GOODDATA/oppenheimer/ko/ko_1/ko_1.jpg,0.732,0.937,0.74
+imitationgame1.jpg,data/images/0GOODDATA/imitationgame/ko/ko_1/ko_1.jpg,0.756,0.945,0.486
+hiddenfigures1.jpg,data/images/0GOODDATA/hiddenfigures/ko/ko_1/ko_1.jpg,0.627,0.895,0.423
+hiddenfigures3.jpg,data/images/0GOODDATA/hiddenfigures/ko/ko_3/ko_3.jpg,0.712,0.923,0.485
+"The Good, the Bart, and the Loki1.jpg","data/images/0GOODDATA/The Good, the Bart, and the Loki/ko/ko_1/ko_1.jpg",0.833,0.914,0.667
+sing21.jpg,data/images/0GOODDATA/sing2/ko/ko_1/ko_1.jpg,0.802,0.936,0.672
+wonderfullife1.jpg,data/images/0GOODDATA/wonderfullife/ko/ko_1/ko_1.jpg,0.581,0.815,0.385
+avengersinfinity1.jpg,data/images/0GOODDATA/avengersinfinity/ko/ko_1/ko_1.jpg,0.708,0.876,0.302
+hiddenfigures2.jpg,data/images/0GOODDATA/hiddenfigures/ko/ko_2/ko_2.jpg,0.661,0.921,0.457
+rayalastdragon1.jpg,data/images/0GOODDATA/rayalastdragon/ko/ko_1/ko_1.jpg,0.896,0.964,0.503
+parasite1.jpg,data/images/0GOODDATA/parasite/ko/ko_1/ko_1.jpg,0.822,0.942,0.948
+Doctor Strange in the Multiverse of Madness1.jpg,data/images/0GOODDATA/Doctor Strange in the Multiverse of Madness/ko/ko_1/ko_1.jpg,0.741,0.917,0.342
+youngwomanandthesea1.jpg,data/images/0GOODDATA/youngwomanandthesea/ko/ko_1/ko_1.jpg,0.919,0.977,0.967
+Missing2.jpg,data/images/0GOODDATA/Missing/ko/ko_2/ko_2.jpg,0.826,0.942,0.859
+pinocchio1.jpg,data/images/0GOODDATA/pinocchio/ko/ko_1/ko_1.jpg,0.766,0.905,0.733
+parasite2.jpg,data/images/0GOODDATA/parasite/ko/ko_2/ko_2.jpg,0.924,0.961,0.728
+A Perfect World1.jpg,data/images/0GOODDATA/A Perfect World/ko/ko_1/ko_1.jpg,0.617,0.827,0.753
+Dunkirk1.jpg,data/images/0GOODDATA/Dunkirk/ko/ko_1/ko_1.jpg,0.623,0.775,0.248
+pulpfiction1.jpg,data/images/0GOODDATA/pulpfiction/ko/ko_1/ko_1.jpg,0.703,0.915,0.31
+District 91.jpg,data/images/0GOODDATA/District 9/ko/ko_1/ko_1.jpg,0.713,0.884,0.42
+clouds1.jpg,data/images/0GOODDATA/clouds/ko/ko_1/ko_1.jpg,0.465,0.872,0.369
+Missing1.jpg,data/images/0GOODDATA/Missing/ko/ko_1/ko_1.jpg,0.753,0.911,0.6
+parasite3.jpg,data/images/0GOODDATA/parasite/ko/ko_3/ko_3.jpg,0.751,0.909,0.282
+Baby Driver1.jpg,data/images/0GOODDATA/Baby Driver/ko/ko_1/ko_1.jpg,0.847,0.941,0.429
+Zombieland1.jpg,data/images/0GOODDATA/Zombieland/ko/ko_1/ko_1.jpg,0.595,0.783,0.468
+Toy Story 43.jpg,data/images/0GOODDATA/Toy Story 4/ko/ko_3/ko_3.jpg,0.814,0.878,0.424
+Toy Story 42.jpg,data/images/0GOODDATA/Toy Story 4/ko/ko_2/ko_2.jpg,0.859,0.887,0.719
+taylorswift1.jpg,data/images/0GOODDATA/taylorswift/ko/ko_1/ko_1.jpg,0.736,0.888,0.704
+interstellar4.jpg,data/images/0GOODDATA/interstellar/ko/ko_4/ko_4.jpg,0.717,0.884,0.346
+Toy Story 41.jpg,data/images/0GOODDATA/Toy Story 4/ko/ko_1/ko_1.jpg,0.774,0.874,0.56
+inception5.jpg,data/images/0GOODDATA/inception/ko/ko_5/ko_5.jpg,0.556,0.928,0.066
+Trolls Band Together1.jpg,data/images/0GOODDATA/Trolls Band Together/ko/ko_1/ko_1.jpg,0.859,0.942,0.875
+The Lego Batman Movie1.jpg,data/images/0GOODDATA/The Lego Batman Movie/ko/ko_1/ko_1.jpg,0.72,0.861,0.871
+The Mission1.jpg,data/images/0GOODDATA/The Mission/ko/ko_1/ko_1.jpg,0.831,0.962,0.65
+thetwotowers2.jpg,data/images/0GOODDATA/thetwotowers/ko/ko_2/ko_2.jpg,0.615,0.873,0.339
+mickey178.jpg,data/images/0GOODDATA/mickey17/ko/ko_8/ko_8.jpg,0.785,0.895,0.795
+Frozen II1.jpg,data/images/0GOODDATA/Frozen II/ko/ko_1/ko_1.jpg,0.759,0.923,0.634
+mickey179.jpg,data/images/0GOODDATA/mickey17/ko/ko_9/ko_9.jpg,0.792,0.908,0.81
+returnofthejedi1.jpg,data/images/0GOODDATA/returnofthejedi/ko/ko_1/ko_1.jpg,0.889,0.956,0.896
+returnoftheking4.jpg,data/images/0GOODDATA/returnoftheking/ko/ko_4/ko_4.jpg,0.605,0.798,0.19
+Pearl1.jpg,data/images/0GOODDATA/Pearl/ko/ko_1/ko_1.jpg,0.771,0.898,0.311
+thetwotowers1.jpg,data/images/0GOODDATA/thetwotowers/ko/ko_1/ko_1.jpg,0.703,0.871,0.233
+spidermanverse3.jpg,data/images/0GOODDATA/spidermanverse/ko/ko_3/ko_3.jpg,0.604,0.918,0.634
+Frozen II3.jpg,data/images/0GOODDATA/Frozen II/ko/ko_3/ko_3.jpg,0.896,0.976,0.783
+indianajonescrusade1.jpg,data/images/0GOODDATA/indianajonescrusade/ko/ko_1/ko_1.jpg,0.833,0.921,0.896
+Frozen II2.jpg,data/images/0GOODDATA/Frozen II/ko/ko_2/ko_2.jpg,0.687,0.874,0.348
+Jumanji1.jpg,data/images/0GOODDATA/Jumanji/ko/ko_1/ko_1.jpg,0.652,0.851,0.088
+harrypotterazkaban1.jpg,data/images/0GOODDATA/harrypotterazkaban/ko/ko_1/ko_1.jpg,0.888,0.945,0.793
+seven1.jpg,data/images/0GOODDATA/seven/ko/ko_1/ko_1.jpg,0.382,0.761,0.25
+bladerunner1.jpg,data/images/0GOODDATA/bladerunner/ko/ko_1/ko_1.jpg,0.634,0.892,0.12
+flaminhot1.jpg,data/images/0GOODDATA/flaminhot/ko/ko_1/ko_1.jpg,0.852,0.961,0.91
+spidermanverse5.jpg,data/images/0GOODDATA/spidermanverse/ko/ko_5/ko_5.jpg,0.715,0.904,0.618
+nightmarebeforechristmas1.jpg,data/images/0GOODDATA/nightmarebeforechristmas/ko/ko_1/ko_1.jpg,0.737,0.782,0.505
+rosemarysbaby1.jpg,data/images/0GOODDATA/rosemarysbaby/ko/ko_1/ko_1.jpg,0.887,0.972,0.846
+theboythemole1.jpg,data/images/0GOODDATA/theboythemole/ko/ko_1/ko_1.jpg,0.947,0.989,0.943
+Average Across All Posters,Number of Posters: 86,0.742,0.901,0.53
