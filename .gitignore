@@ -1,7 +1,5 @@
 
 # Customized
-data
-data*
 .DS_Store
 *.sh
 results
@@ -184,4 +182,4 @@ cython_debug/
 
 
 # my ignores
-data/images/
+
