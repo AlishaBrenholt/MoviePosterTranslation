@@ -61,7 +61,6 @@ def get_font_size(korean_text, positions, draw, middle_pixel):
 
         # if text bbox within outer bounding box
         if bbox[0] >= left[0] and bbox[2] <= right[0]:
-            draw.rectangle(box, fill=None, outline=0, width=2)
             break # textbox within bounds
         else:
             fontsize -= 1
