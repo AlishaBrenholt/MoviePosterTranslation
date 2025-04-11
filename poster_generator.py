@@ -1,4 +1,5 @@
 from PIL import Image, ImageDraw, ImageFont
+import math
 
 def generate_poster(img_path, ko_text, text_data):
     img = Image.open(img_path)
@@ -6,18 +7,16 @@ def generate_poster(img_path, ko_text, text_data):
     for item in ko_text:
         korean_characters = item[0]
         positions = item[1]
-        top = positions[1]
-        bottom = positions[3]
         left = positions[0]
+        top = positions[1]
+        right = positions[2]
+        bottom = positions[3]
 
-        fontsize = get_font_size(korean_characters, positions)
-
+        middle_pixel = (left[0] + ((right[0] - left[0]) / 2), bottom[1] + ((top[1] - bottom[1])) / 2)
+        fontsize = get_font_size(korean_characters, positions, draw, middle_pixel)
         font = ImageFont.truetype('./fonts/malgun-gothic.ttf', fontsize)
-
         font_color = get_font_color(img_path, positions)
-
-        draw.text(left, korean_characters, font_color, font=font,
-                  align='center')
+        draw.text(middle_pixel, korean_characters, font_color, font=font, anchor='mm')
 
     save_path = './results/final_image/' + img_path[16:-9] + img_path[-5:]
     img.save(save_path)
@@ -42,15 +41,28 @@ def get_font_color(img_path, positions):
         text_color = (255, 255, 255) # white text
     return text_color
 
-def get_font_size(korean_text, positions):
+def get_font_size(korean_text, positions, draw, middle_pixel):
     if len(korean_text) == 0: # possible error in text detection or translation
-        return 1
+        return ImageFont.truetype('./fonts/malgun-gothic.ttf', 1)
 
     left = positions[0]
     top = positions[1]
     right = positions[2]
     bottom = positions[3]
-    fontsize = (abs(top[1] - bottom[1]))
-    if fontsize == 0 or fontsize < 0:
-        fontsize = right[0]-left[0] // len(korean_text)
+    fontsize = abs(left[0]-right[0])  # initialize
+
+    # make textbox smaller until it fits within bounding box
+    while fontsize > 1:
+        font = ImageFont.truetype('./fonts/malgun-gothic.ttf', fontsize)
+        # left, top, right, bottom
+        bbox = draw.textbbox(middle_pixel, korean_text, font=font, anchor='mm')
+        box = (math.floor(bbox[0]), math.floor(bbox[1]),
+               math.floor(bbox[2]), math.floor(bbox[3]))
+
+        # if text bbox within outer bounding box
+        if bbox[0] >= left[0] and bbox[2] <= right[0]:
+            draw.rectangle(box, fill=None, outline=0, width=2)
+            break # textbox within bounds
+        else:
+            fontsize -= 1
     return fontsize
