@@ -16,7 +16,7 @@ class GPTTranslator():
             model="gpt-4o-mini",
             store=True,
             messages=[
-                {"role": "system", "content": f"You are a translator who translates English to Korean. The given english might not be correct, so try to understand the real english before translating. It will be related to movies in some way. Only repond with the korean hangul translation, say nothing else. I only want you to translate the word given, however translate it in context with this being the entire english sentence {sentence}. I will feed you one english word at a time, in the order of this sentence. "},
+                {"role": "system", "content": f"You are a translator who translates English to Korean. The given english might not be correct, so try to understand the real english before translating. For example, Robrt should be translated to 로버트. It will be related to movies in some way. Only repond with the korean hangul translation, say nothing else. I only want you to translate the word given, however translate it in context with this being the entire english sentence {sentence}. I will feed you one english word at a time, in the order of this sentence. "},
                 {"role": "user", "content": f"The word I want you to translate, in context of the sentence, is {text}"},
             ]
             )
