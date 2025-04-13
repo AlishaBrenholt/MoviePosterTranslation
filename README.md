@@ -16,6 +16,7 @@ First you need to install dotenv by running `pip install python-dotenv` in your 
 ```
 API_KEY=your_api_key
 TESSERACT_PATH=your_tesseract_path
+GPT_KEY=your_gpt_key
 ```
 
 ## Execution
