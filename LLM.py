@@ -2,6 +2,7 @@ from transformers import MBartForConditionalGeneration, MBart50TokenizerFast, pi
     AutoTokenizer
 from nltk.translate.bleu_score import sentence_bleu, SmoothingFunction
 import time
+from gpt import GPTTranslator
 
 class LLMController():
     def __init__(self):
@@ -30,6 +31,9 @@ class LLMController():
         self.tokenizer = MBart50TokenizerFast.from_pretrained("facebook/mbart-large-50-many-to-many-mmt")
         self.mbart_finetuned.eval()
         print("Models loaded")
+
+        # Model 6
+        self.gpt = GPTTranslator()
 
     def translate_good(self, text):
         model_inputs = self.tokenizer(text, return_tensors="pt")
@@ -112,6 +116,9 @@ class LLMController():
 
         return result
 
+    def translate_gpt(self, text):
+        result = self.gpt.translate(text)
+        return result
 
 
 
@@ -127,7 +134,7 @@ class LLMController():
         bleu_scores = []
         smoother = SmoothingFunction()
         for i in range(len(translated)):
-            bleu_scores.append(sentence_bleu(sentence_pairs[i][1], translated[i], weights= (1, 0, 0, 0), smoothing_function=smoother.method1))
+            bleu_scores.append(sentence_bleu(sentence_pairs[i][1], translated[i], smoothing_function=smoother.method1))
 
         average_bleu = sum(bleu_scores) / len(bleu_scores)
         return average_bleu
@@ -154,7 +161,11 @@ class LLMController():
         instruct_bleu = self.evaluate_function(sentence_pairs, self.translate_instruct)
         print(f"Instruct BLEU: {instruct_bleu:.5f} - Time taken: {time.time()-end:.2f} seconds")
 
-        score_dict = {"good": good_bleu, "facebook": facebook_bleu, "keti": keti_bleu, "mbart": mbart_bleu, "instruct": instruct_bleu}
+        end = time.time()
+        gpt_bleu = self.evaluate_function(sentence_pairs, self.translate_gpt)
+        print(f"GPT BLEU: {gpt_bleu:.5f} - Time taken: {time.time()-end:.2f} seconds")
+
+        score_dict = {"good": good_bleu, "facebook": facebook_bleu, "keti": keti_bleu, "mbart": mbart_bleu, "instruct": instruct_bleu, "gpt": gpt_bleu}
         # Print results as a table
         if print_bool:
             self.pretty_print(score_dict)
@@ -170,7 +181,7 @@ class LLMController():
 
 if __name__ == "__main__":
     llm = LLMController()
-    sentence_pairs = [("Parasite is a good movie", ["기생충은 좋은 영화입니다"]),("my friends and I went to the movie theater", ["친구들과 영화관에 갔어요","친구들과 영화관에 갔을 때","친구들과 영화관에 갔는데"]),("We ate popcorn and saw The Avengers: Endgame", ["팝콘을 먹으며 어벤져스를 봤어요: 엔드게임"])]
+    sentence_pairs = [("Parasite is a good movie", ["기생충은 좋은 영화입니다"]),("my friends and I went to the movie theater", ["친구들과 영화관에 갔어요","친구들과 영화관에 갔을 때","친구들과 영화관에 갔는데"]),("We ate popcorn and saw The Avengers: ndgame", ["팝콘을 먹으며 어벤져스를 봤어요: 엔드게임"])]
     llm.evaluate(sentence_pairs, print_bool=True)
 
 
